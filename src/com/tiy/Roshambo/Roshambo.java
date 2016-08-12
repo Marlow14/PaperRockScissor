@@ -24,13 +24,17 @@ public class Roshambo {
 	static KeyboardInputOpponent keyInputOpp = new KeyboardInputOpponent();
 
 	static int didIWin = currentPlayer.getUserChoice();
+	
+	static boolean playAgain = false;
 
 	public static void main(String[] args) {
 
-		playGame();
-		getOpponent();
-		seeWhoWon();
+		gamePlayer();
 
+//		playGame();
+//		getOpponent();
+//		seeWhoWon();
+		
 	}
 
 	public static void playGame() {
@@ -60,18 +64,18 @@ public class Roshambo {
 
 		do{
 		
-			System.out.println("Which type of opponent do you want to play against?\n" + "Type: Basic, Random, Random2, or Random3");
+			System.out.println("Which type of opponent do you want to play against?\n" + "Type: Basic, Random1, Random2, or Random3");
 
 			userInput = keyboard.nextLine();
 		
 		}while(!((userInput.equalsIgnoreCase("basic")) 
-				|| (userInput.equalsIgnoreCase("random")) 
+				|| (userInput.equalsIgnoreCase("random1")) 
 				|| (userInput.equalsIgnoreCase("random2")) 
 				|| (userInput.equalsIgnoreCase("random3"))));
 		
 		if (userInput.equalsIgnoreCase("basic")) {
 			baseOpp.storeChoice();
-		} else if (userInput.equalsIgnoreCase("random")) {
+		} else if (userInput.equalsIgnoreCase("random1")) {
 			ranOpp.storeChoice();
 		} else if (userInput.equalsIgnoreCase("input")) {
 			keyInputOpp.storeChoice();
@@ -91,6 +95,7 @@ public class Roshambo {
 			System.out.println("You both tied!!!");
 
 		} else if (((didIWin == 1) && (baseOpp.getOppChoice() == 3)) 
+				|| ((didIWin == 2) && (baseOpp.getOppChoice() == 1))
 				|| ((didIWin == 1) && (ranOpp.getOppChoice() == 3))
 				|| ((didIWin == 2) && (ranOpp.getOppChoice() == 1))
 				|| ((didIWin == 3) && (ranOpp.getOppChoice() == 2))
@@ -102,7 +107,7 @@ public class Roshambo {
 				|| ((didIWin == 3) && (ranOpp3.getOppChoice() == 2))) 
 		{
 
-			System.out.println("User loses!!!");
+			System.out.println(currentPlayer.getUserName() + " Loses!!!");
 		
 		} else if (((didIWin == 3) && (baseOpp.getOppChoice() == 1)) 
 				|| ((didIWin == 2) && (ranOpp.getOppChoice() == 3))
@@ -116,9 +121,31 @@ public class Roshambo {
 				|| ((didIWin == 1) && (ranOpp3.getOppChoice() == 2))) 
 		{
 
-			System.out.println("User wins!!!");
+			System.out.println(currentPlayer.getUserName() + " Wins!!!");
 		}
 
+	}
+	
+	public static void gamePlayer() {
+		
+		do{
+			
+			playGame();
+			getOpponent();
+			seeWhoWon();
+			
+			System.out.println("Enter y for yes and n for no:\n" + "Do you want to play again?");
+			userInput = keyboard.nextLine();
+			
+			if (userInput.equalsIgnoreCase("y")){
+				playAgain = true;
+			}else if (userInput.equalsIgnoreCase("n"))
+			{
+				playAgain = false;
+			}
+			
+		}while(playAgain == true);
+		
 	}
 
 }

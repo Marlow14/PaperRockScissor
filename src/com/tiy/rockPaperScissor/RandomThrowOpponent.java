@@ -37,7 +37,7 @@ public class RandomThrowOpponent extends Player{
 			oppChoice = 3;
 			System.out.println("Opponent = Scissors!");
 			break;
-			default:
+		default:
 				
 		}
 		
